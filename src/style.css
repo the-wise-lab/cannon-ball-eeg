@@ -17,6 +17,14 @@ html, body {
     background: linear-gradient(142deg, rgba(2,0,50,1) 0%, rgba(0,13,87,1) 69%, rgba(52,0,111,1) 100%) fixed;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
 h3 {
     font-family: 'Rubik';
     color: #dadada;
@@ -29,15 +37,26 @@ h3 {
 
 h2 {
     font-family: 'Rubik';
-    color: #e0e0e0;
+    color: #333;
     font-size: 100px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Form Styles */
+/* Smaller heading for the settings page */
+.settings-heading {
+    font-size: 40px; /* Reduced from 100px */
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
 .form {
-    max-width: 1000px;
-    margin: 60px auto;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .mainInstructions {
@@ -47,5 +66,61 @@ h2 {
     text-align: center;
     font-size: 18px;
     color: #d8d8d8;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.form-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+/* Checkbox label styling */
+.form-group label {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: transparent; /* Important: transparent background */
 }
 

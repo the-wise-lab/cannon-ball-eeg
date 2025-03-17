@@ -8,10 +8,8 @@ import triggerManager from '../external/eeg-trigger-js/triggerManager.js';
 
 /**
  * Function to check the start of the game.
- *
- * @param {string} uid - The user ID.
  */
-var startGame = function (uid) {
+var startGame = function () {
     // Get URL variables
     let { subjectID, testing, studyID, short, task, session } = extractUrlVariables();
 
@@ -41,6 +39,7 @@ var startGame = function (uid) {
         // Subject and study IDs stored in registry
         game.registry.set("subjectID", subjectID);
         game.registry.set("studyID", studyID.toLowerCase());
+        game.registry.set("session", session);
 
         // Apply configuration settings to the game (given in config.js)
         applyGameConfig(game, task);
@@ -58,17 +57,13 @@ var startGame = function (uid) {
         game.registry.set("task", task);
 
         // Store the database and uid in the game config
-        // game.config.db = db; 
-        game.config.uid = uid;
+        game.config.uid = subjectID; // Using subjectID as uid
 
         // Initialise the subject in the database
-        // Try to initialize the subject
         try {
             initSubject(game);
         } catch (error) {
-            // Log a warning if initialization fails
             console.warn("Failed to initialise subject:", error);
-            // Set a flag in the registry to indicate initialization failure
             game.registry.set("init_subject_failed", true);
         }
 
@@ -83,16 +78,5 @@ var startGame = function (uid) {
 // Wait for the DOM to be fully loaded before starting the game
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM fully loaded, starting game...");
-    // Sign in and start the game
-    // signInAndGetUid()
-    //     .then((uid) => {
-    //         console.log("Signed in with UID:", uid);
-    //         startGame(uid); // Pass uid as an argument to startGame
-    //     })
-    //     .catch((error) => {
-    //         console.error("Sign-in failed:", error);
-    //     });
-    
-    
     startGame();
 });
