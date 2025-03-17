@@ -7,6 +7,11 @@ const gameConfigSettings = {
 
     // URL to redirect to after the game is complete
     redirectURL: "www.redirecturl.com",
+    
+    // API settings
+    apiURL: "127.0.0.1",
+    apiPort: 5000,
+    apiEndpoint: "/submit_data",
 
     // Settings for game play
     alienSpeed: 120,

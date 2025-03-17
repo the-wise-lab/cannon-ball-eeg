@@ -9,6 +9,9 @@ export function applyGameConfig(game, task) {
     // Destructure the gameConfigSettings object
     const {
         redirectURL,
+        apiURL,
+        apiPort,
+        apiEndpoint,
         alienSpeed,
         debugPhysics,
         dataSaveInterval,
@@ -17,6 +20,9 @@ export function applyGameConfig(game, task) {
         MF
     } = gameConfigSettings;
 
+    // Store the entire gameConfigSettings object in the registry
+    game.registry.set("gameConfigSettings", gameConfigSettings);
+
     // Apply basic settings
     game.registry.set("trial", 0);
     game.registry.set("data", {});
@@ -24,6 +30,11 @@ export function applyGameConfig(game, task) {
     game.registry.set("alienSpeed", alienSpeed);
     game.registry.set("debugPhysics", debugPhysics);
     game.registry.set("dataSaveInterval", dataSaveInterval);
+    
+    // Apply API settings
+    game.registry.set("apiURL", apiURL);
+    game.registry.set("apiPort", apiPort);
+    game.registry.set("apiEndpoint", apiEndpoint);
 
     // Task-specific settings
     switch (task) {
@@ -99,6 +110,9 @@ export function extractUrlVariables() {
 
     // Get task type from URL
     var task = urlParams.has('TASK') ? getQueryVariable('TASK') : "MB";
+
+    // Get the session
+    var session = urlParams.has('SESSION') ? getQueryVariable('SESSION') : "none";
 
     return {
         subjectID: subjectID,

@@ -1,35 +1,9 @@
-import {
-    doc,
-    setDoc,
-    updateDoc,
-} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
-
 /**
  * Initializes the subject data in the Firestore database.
  * @param {object} game - The game object.
  */
 export function initSubject(game) {
-    // const docRef = doc(
-    //     game.config.db,
-    //     "STUDY",
-    //     game.config.studyID,
-    //     "subjects",
-    //     game.config.uid
-    // );
 
-    // setDoc(docRef, {
-    //     subjectID: game.registry.get("subjectID"),
-    //     date: new Date().toLocaleDateString(),
-    //     time: new Date().toLocaleTimeString(),
-    //     trial_data: [],
-    //     attention_checks: [],
-    // })
-    //     .then(() => {
-    //         console.log("Data successfully written!");
-    //     })
-    //     .catch((error) => {
-    //         console.error("Error writing document: ", error);
-    //     });
 }
 
 /**
@@ -37,25 +11,51 @@ export function initSubject(game) {
  * @param {object} scene - The scene object.
  */
 export function saveData(game) {
-    // // Get a reference to the document in the Firestore database
-    // const docRef = doc(
-    //     game.config.db,
-    //     "STUDY",
-    //     game.config.studyID,
-    //     "subjects",
-    //     game.config.uid
-    // );
+    console.log(game.registry.get("data"));
 
-    // // Update the document with the trial data
-    // updateDoc(docRef, {
-    //     trial_data: game.registry.get("data"),
-    // })
-    //     .then(() => {
-    //         // Log a success message when the data is successfully updated
-    //         console.log("Data successfully updated!");
-    //     })
-    //     .catch((error) => {
-    //         // Log an error message if there is an error updating the document
-    //         console.error("Error updating document: ", error);
-    //     });
+    const gameData = game.registry.get("data");
+
+    // This is an object, turn it into an array
+    const gameDataArray = Object.entries(gameData);
+    
+    // Format the data for the API request
+    const requestData = {
+        "task": "cannonball-" + game.registry.get("task") || "default_task",
+        "id": game.registry.get("subjectID") || "default_id",
+        "session": game.registry.get("session") || "none", 
+        "write_mode": "overwrite", 
+        "data": gameDataArray.map(([key, value]) => value)
+    };
+
+    console.log(requestData);
+
+    // Build the complete API URL using individual registry values
+    const apiURL = game.registry.get("apiURL") || "127.0.0.1";
+    const apiPort = game.registry.get("apiPort") || 5000;
+    const apiEndpoint = game.registry.get("apiEndpoint") || "/submit_data";
+    
+    // Construct the complete URL
+    const fullApiUrl = `http://${apiURL}${apiPort ? `:${apiPort}` : ''}${apiEndpoint}`;
+
+    // Make the POST request to the API endpoint
+    fetch(fullApiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data successfully saved to API:', data);
+    })
+    .catch(error => {
+        console.error('Error saving data to API:', error);
+    });
+
 }

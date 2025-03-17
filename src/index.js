@@ -13,7 +13,7 @@ import triggerManager from '../external/eeg-trigger-js/triggerManager.js';
  */
 var startGame = function (uid) {
     // Get URL variables
-    let { subjectID, testing, studyID, short, task } = extractUrlVariables();
+    let { subjectID, testing, studyID, short, task, session } = extractUrlVariables();
 
     // Clear start element and scroll to top
     document.getElementById("start").innerHTML = "";
