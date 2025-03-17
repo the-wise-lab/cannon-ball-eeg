@@ -5,9 +5,11 @@ class IntroScene extends Phaser.Scene {
         });
     }
 
-    init(data) {}
+    init(data) {
+    }
 
     create() {
+        
         // Create main text with styling
         this.text = this.add.text(250, 300, "Cannon Ball", {
             fontSize: "32px",   // Set font size
@@ -43,6 +45,7 @@ class IntroScene extends Phaser.Scene {
                 if ((this.textLower.alpha > 0.9) & !this.click) {
                     this.textLower.setColor("#FF0180");    // Change text color when clicked
                     this.click = true;  // Set click flag to true
+                    
                     this.nextScene();   // Start the next scene
                 }
             }.bind(this)
@@ -63,7 +66,6 @@ class IntroScene extends Phaser.Scene {
     }
 
     update() {}
-
     /**
      * Transitions to the next scene by animating the lower and main text.
      */
@@ -89,6 +91,7 @@ class IntroScene extends Phaser.Scene {
             yoyo: false,
             repeat: 0,
             onComplete: function () {
+                
                 // Starts the next scene after the animation is complete
                 if (this.game.config.testing) {
                     this.scene.start('GameScene');

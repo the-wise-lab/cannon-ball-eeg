@@ -239,6 +239,10 @@ class GameScene extends Phaser.Scene {
      * @param {Ball} ball - The ball object.
      */
     handleBallAlienOverlap(ball) {
+
+        // Send trigger
+        this.game.registry.get("triggerManager").sendTriggerByEvent("game.alienHit");
+        
         // Reset the position of the ball
         ball.resetPosition();
 
@@ -260,6 +264,10 @@ class GameScene extends Phaser.Scene {
     handleBallAsteroidOverlap(asteroid, ball) {
         // Check if the confidence target hit flag is false
         if (!this.confidenceTargetHit) {
+
+            // Send trigger
+            this.game.registry.get("triggerManager").sendTriggerByEvent("game.asteroidHit");
+
             // Set the confidence target hit flag to true
             this.confidenceTargetHit = true;
 
@@ -623,6 +631,9 @@ class GameScene extends Phaser.Scene {
             !this.ball_pink.visible &&
             !this.ball_purple.visible
         ) {
+            // Send trigger
+            this.game.registry.get("triggerManager").sendTriggerByEvent("game.response");
+
             // Handle the response
             this.handleResponse(response);
         }
@@ -756,6 +767,10 @@ class GameScene extends Phaser.Scene {
     }
 
     startNewTrial() {
+
+        // Send trigger
+        this.game.registry.get("triggerManager").sendTriggerByEvent("game.newTrial");
+
         // increment trial number
         this.trialNumber += 1;
 

@@ -4,6 +4,7 @@ import { initSubject } from "./data.js";
 // Other things
 import { extractUrlVariables, applyGameConfig } from "./utils.js";
 import gameConfig from "./gameConfig.js";
+import triggerManager from '../external/eeg-trigger-js/triggerManager.js';
 
 /**
  * Function to check the start of the game.
@@ -17,11 +18,25 @@ var startGame = function (uid) {
     // Clear start element and scroll to top
     document.getElementById("start").innerHTML = "";
     window.scrollTo(0, 0);
+    
+    // Initialize the trigger manager with mappings
+    triggerManager.initialize('127.0.0.1', 5001, './triggerMappings.json')
+        .then(() => {
+            console.log('Trigger manager initialized and mappings loaded');
+            // Send game start trigger
+            return triggerManager.sendTriggerByEvent('game.start', 'Game initialization');
+        })
+        .catch(error => {
+            console.error('Failed to initialize trigger manager:', error);
+        });
 
     // Wait a bit before starting
     setTimeout(function () {
         // Create the game with the configuration object defined above
         let game = new Phaser.Game(gameConfig);
+        
+        // Store trigger manager in game registry for use throughout the game
+        game.registry.set("triggerManager", triggerManager);
 
         // Subject and study IDs stored in registry
         game.registry.set("subjectID", subjectID);
@@ -65,14 +80,19 @@ var startGame = function (uid) {
     }, 1000);
 };
 
-// Sign in and start the game
-// signInAndGetUid()
-//     .then((uid) => {
-//         console.log("Signed in with UID:", uid);
-//         startGame(uid); // Pass uid as an argument to startGame
-//     })
-//     .catch((error) => {
-//         console.error("Sign-in failed:", error);
-//     });
-
-startGame();
+// Wait for the DOM to be fully loaded before starting the game
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded, starting game...");
+    // Sign in and start the game
+    // signInAndGetUid()
+    //     .then((uid) => {
+    //         console.log("Signed in with UID:", uid);
+    //         startGame(uid); // Pass uid as an argument to startGame
+    //     })
+    //     .catch((error) => {
+    //         console.error("Sign-in failed:", error);
+    //     });
+    
+    
+    startGame();
+});
