@@ -38,6 +38,24 @@
                         <option value="MF">Model-Free Task (MF)</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label>Server Settings:</label>
+                    <div class="server-settings">
+                        <div class="server-group">
+                            <label for="dataServerURL">Data Server URL:</label>
+                            <input type="text" id="dataServerURL" name="dataServerURL" value="127.0.0.1">
+                            <label for="dataServerPort">Port:</label>
+                            <input type="number" id="dataServerPort" name="dataServerPort" value="5000">
+                        </div>
+                        <div class="server-group">
+                            <label for="triggerServerURL">Trigger Server URL:</label>
+                            <input type="text" id="triggerServerURL" name="triggerServerURL" value="127.0.0.1">
+                            <label for="triggerServerPort">Port:</label>
+                            <input type="number" id="triggerServerPort" name="triggerServerPort" value="5001">
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <label><input type="checkbox" id="testing" name="testing"> Testing Mode</label>

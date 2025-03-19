@@ -11,14 +11,15 @@ import triggerManager from '../external/eeg-trigger-js/triggerManager.js';
  */
 var startGame = function () {
     // Get URL variables
-    let { subjectID, testing, studyID, short, task, session } = extractUrlVariables();
+    let { subjectID, testing, studyID, short, task, session, 
+          dataServerURL, dataServerPort, triggerServerURL, triggerServerPort } = extractUrlVariables();
 
     // Clear start element and scroll to top
     document.getElementById("start").innerHTML = "";
     window.scrollTo(0, 0);
     
     // Initialize the trigger manager with mappings
-    triggerManager.initialize('127.0.0.1', 5001, './triggerMappings.json')
+    triggerManager.initialize(triggerServerURL, parseInt(triggerServerPort), './triggerMappings.json')
         .then(() => {
             console.log('Trigger manager initialized and mappings loaded');
             // Send game start trigger
@@ -43,6 +44,10 @@ var startGame = function () {
 
         // Apply configuration settings to the game (given in config.js)
         applyGameConfig(game, task);
+        
+        // Override server settings from URL
+        game.registry.set("apiURL", dataServerURL);
+        game.registry.set("apiPort", parseInt(dataServerPort));
 
         // Set testing flag
         game.config.testing = testing === "FALSE" ? false : true;

@@ -93,6 +93,10 @@ let getQueryVariable = (variable) => {
  *  - short: A boolean indicating whether the "SHORT" variable is present in the URL.
  *  - task: The task type from the URL or "MB".
  *  - session: The session number from the URL or "1".
+ *  - dataServerURL: The data server URL from the URL or "127.0.0.1".
+ *  - dataServerPort: The data server port from the URL or "5000".
+ *  - triggerServerURL: The trigger server URL from the URL or "127.0.0.1".
+ *  - triggerServerPort: The trigger server port from the URL or "5001".
  */
 export function extractUrlVariables() {
     var urlParams = new URLSearchParams(window.location.search);
@@ -115,13 +119,23 @@ export function extractUrlVariables() {
     // Get the session
     var session = urlParams.has('SESSION') ? getQueryVariable('SESSION') : "1";
 
+    // Get server settings
+    var dataServerURL = urlParams.has('DATA_SERVER') ? getQueryVariable('DATA_SERVER') : "127.0.0.1";
+    var dataServerPort = urlParams.has('DATA_PORT') ? getQueryVariable('DATA_PORT') : "5000";
+    var triggerServerURL = urlParams.has('TRIGGER_SERVER') ? getQueryVariable('TRIGGER_SERVER') : "127.0.0.1";
+    var triggerServerPort = urlParams.has('TRIGGER_PORT') ? getQueryVariable('TRIGGER_PORT') : "5001";
+
     return {
         subjectID: subjectID,
         testing: testing,
         studyID: studyID,
         short: short,
         task: task,
-        session: session
+        session: session,
+        dataServerURL: dataServerURL,
+        dataServerPort: dataServerPort,
+        triggerServerURL: triggerServerURL,
+        triggerServerPort: triggerServerPort
     };
 }
 
