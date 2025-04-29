@@ -4,7 +4,7 @@ import { initSubject } from "./data.js";
 // Other things
 import { extractUrlVariables, applyGameConfig } from "./utils.js";
 import gameConfig from "./gameConfig.js";
-import triggerManager from '../external/eeg-trigger-js/triggerManager.js';
+import triggerManager from 'https://cdn.jsdelivr.net/gh/the-wise-lab/eeg-trigger-js@main/triggerManager.js';
 
 /**
  * Function to check the start of the game.
