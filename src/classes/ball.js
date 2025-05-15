@@ -129,10 +129,6 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.scene.time.delayedCall(
             150,
             () => {
-
-                // Send trigger
-                this.scene.game.registry.get("triggerManager").sendTriggerByEvent("game.ballExplode");
-
                 let explosionGroup = this[this.currentColour + "Explosions"];
                 let explosion = explosionGroup.get(this.x, this.y);
                 if (explosion) {
@@ -184,9 +180,6 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             repeat: 0,
             yoyo: false,
             onComplete: () => {
-                // Send trigger
-                this.scene.game.registry.get("triggerManager").sendTriggerByEvent("game.ballFired");
-
                 // Set x and y to be the same as the cannon
                 this.x = this.scene.cannon.x;
                 this.y = this.scene.cannon.y;
@@ -223,9 +216,6 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             this.body.velocity.length() > 0 &&
             this.alpha !== 0
         ) {
-            // Send trigger
-            this.scene.game.registry.get("triggerManager").sendTriggerByEvent("game.ballMissed");
-
             this.setVelocity(0);
             this.setVisible(false);
 
